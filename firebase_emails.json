@@ -1,0 +1,10 @@
+{
+  "admin_emails": {
+    "admin1@strath,edu": true,
+    "admin2@strath,edu": true
+  },
+  "authorized_emails": {
+    "alumni1@strath,edu": true,
+    "student1@strath,edu": true
+  }
+}

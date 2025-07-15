@@ -7,18 +7,51 @@
   </head>
   <body>
     <div class="container mt-4">
-      <h1>Welcome, Student!</h1>
-      <div class="card">
-        <div class="card-body">
-          <h5>Request Mentorship</h5>
-          <select id="skill-select" class="form-select mb-3">
-            <option>Graphic Design</option>
-            <option>Programming</option>
-          </select>
-          <button id="request-btn" class="btn btn-primary">Send Request</button>
+      <div class="row">
+        <!-- Left Sidebar (Points/Leaderboard) -->
+        <div class="col-md-3">
+          <div class="card mb-3">
+            <div class="card-body text-center">
+              <h5>Your Points</h5>
+              <div class="display-4" id="points">0</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5>Leaderboard</h5>
+              <ol id="leaderboard" class="list-group list-group-numbered">
+                <!-- Mock data loaded via JS -->
+              </ol>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Main Content -->
+        <div class="col-md-9">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h4>Request Microservice</h4>
+              <select id="service-type" class="form-select mb-3">
+                <option>Graphic Design</option>
+                <option>Code Review</option>
+              </select>
+              <button id="request-service-btn" class="btn btn-success">Post Request</button>
+            </div>
+          </div>
+    
+          <div class="card">
+            <div class="card-body">
+              <h4>Find Alumni Mentors</h4>
+              <div id="alumni-list" class="mb-3">
+                <!-- Alumni loaded via JS -->
+              </div>
+              <button id="request-mentor-btn" class="btn btn-primary">Request Mentorship</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <script src="student-dashboard.js"></script>
+    
+    <script src="js/student.js"></script>
   </body>
 </html>

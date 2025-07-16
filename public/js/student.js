@@ -12,6 +12,7 @@ const mockLeaderboard = [
 // Load data on page load
 window.onload = function () {
   // Load leaderboard
+  /*
   const leaderboardEl = document.getElementById("leaderboard");
   mockLeaderboard.forEach((user) => {
     leaderboardEl.innerHTML += `
@@ -21,6 +22,7 @@ window.onload = function () {
       </li>
     `;
   });
+  */
 
   // Load alumni
   const alumniListEl = document.getElementById("alumni-list");

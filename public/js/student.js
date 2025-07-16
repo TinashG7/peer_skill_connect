@@ -4,10 +4,12 @@ const mockAlumni = [
   { id: 2, name: "Priya K", skill: "UX Design", points: 95 },
 ];
 
+/*
 const mockLeaderboard = [
   { name: "John Kimani", points: 200 },
   { name: "Jane Nganga", points: 180 },
 ];
+*/
 
 // Load data on page load
 window.onload = function () {

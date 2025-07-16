@@ -9,48 +9,151 @@
       rel="stylesheet"
     />
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/sidebar.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="container mt-4">
-      <div class="row">
-        
-        <div class="col-md-3">
-          <div class="card mb-3">
-            <div class="card-body text-center">
-              <h5>Your Points</h5>
-              <div class="display-4" id="points">0</div>
+    <div class="d-flex">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar-brand">Peer-Skill Connect</div>
+
+        <div class="sidebar-nav">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="student_dashboard.html">
+                <i class="fas fa-home"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fas fa-briefcase"></i> Find Jobs
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fas fa-user-tie"></i> Find Mentor
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fas fa-users"></i> Find Mentees
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="leaderboard.html">
+                <i class="fas fa-trophy"></i> View Leaderboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fas fa-bell"></i> Notifications
+                <span class="badge bg-danger ms-2">3</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fas fa-tasks"></i> Your Services
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-footer">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fas fa-cog"></i> Settings
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fas fa-sign-out-alt"></i> Log Out
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="container-fluid">
+          <!-- Page Heading -->
+          <div
+            class="d-sm-flex align-items-center justify-content-between mb-4"
+          >
+            <h1 class="h3 mb-0 text-gray-800">Leaderboard</h1>
+          </div>
+
+          <!-- Content Row -->
+          <div class="row">
+            <!-- Points Card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div
+                class="card border-left-primary shadow h-100 py-2 points-card"
+              >
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div
+                        class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                      >
+                        Your Points
+                      </div>
+                      <div
+                        class="h5 mb-0 font-weight-bold text-gray-800"
+                        id="current-points"
+                      >
+                        0
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-coins fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Leaderboard Card -->
+            <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4 leaderboard-card">
+                <div
+                  class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                >
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    Top Performers
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <ol id="leaderboard" class="list-group list-group-flush">
+                      <!-- Leaderboard items will be inserted here by JavaScript -->
+                    </ol>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="card">
-            <div class="card-body">
-              <h5>Leaderboard</h5>
-              <ol id="leaderboard" class="list-group list-group-numbered">
-                
-              </ol>
+
+          <!-- Complete Task Button -->
+          <div class="row">
+            <div class="col-lg-6 mb-4">
+              <button
+                id="complete-task-btn"
+                class="btn btn-primary btn-lg task-btn w-100 py-3"
+              >
+                <i class="fas fa-check-circle mr-2"></i> Complete Task (+10
+                Points)
+              </button>
             </div>
           </div>
         </div>
-
-        
       </div>
     </div>
 
-    <div class="container mt-4">
-    
-      <ul id="leaderboard" class="list-group"></ul>
-
-      
-      <button id="complete-task-btn" class="btn btn-primary mt-3">
-        Complete Task (+10 Points)
-      </button>
-
-      
-      <div class="mt-3">
-        <h5>Current User Points: <span id="current-points">0</span></h5>
-      </div>
-    </div>
-
-    
+    <!-- Bootstrap & jQuery JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
     <script src="js/student.js"></script>
     <script src="js/gamification_mock.js"></script>
   </body>

@@ -1,0 +1,43 @@
+      .points-card {
+        border-left: 0.25rem solid var(--primary-color) !important;
+      }
+      
+      .leaderboard-card {
+        border-left: 0.25rem solid #1cc88a !important;
+      }
+      
+      #current-points {
+        color: var(--primary-color);
+        font-weight: 700;
+      }
+      
+      .leaderboard-item {
+        transition: all 0.3s ease;
+      }
+      
+      .leaderboard-item:hover {
+        transform: translateX(5px);
+      }
+      
+      .current-user {
+        background-color: rgba(78, 115, 223, 0.1) !important;
+        border-left: 3px solid var(--primary-color) !important;
+      }
+      
+      .badge-earned {
+        box-shadow: 0 0 0 2px white, 0 0 0 4px #f6c23e;
+      }
+      
+      .task-btn {
+        background-color: var(--primary-color);
+        border: none;
+        padding: 0.8rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s;
+      }
+      
+      .task-btn:hover {
+        background-color: var(--accent-color);
+        transform: translateY(-2px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      }

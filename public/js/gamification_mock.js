@@ -4,43 +4,58 @@ const mockUsers = [
   { id: "mock_user_3", name: "Bob", points: 220, badges: [] },
 ];
 
+// Initialize the app when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Initial render
+  renderLeaderboard();
+  updateCurrentPointsDisplay();
+  
+  // Setup event listeners
+  document.getElementById("complete-task-btn").addEventListener("click", () => {
+    mockAwardPoints(10); 
+  });
+});
+
 function renderLeaderboard() {
   const leaderboardEl = document.getElementById("leaderboard");
   leaderboardEl.innerHTML = mockUsers
     .sort((a, b) => b.points - a.points)
-    .map(
-      (user) => `
-      <li class="list-group-item d-flex justify-content-between align-items-center">
+    .map(user => `
+      <li class="list-group-item d-flex justify-content-between align-items-center ${user.id === "mock_user_1" ? "active-user" : ""}">
         <div>
-          <span class="fw-bold">${user.name}</span>
-          <!-- ${user.badges
-            .map((b) => `<span class="badge bg-warning ms-2">${b}</span>`)
-            .join("")} -->
+          <span class="${user.id === "mock_user_1" ? "fw-bold text-primary" : ""}">${user.name}</span>
         </div>
         <span class="badge bg-primary rounded-pill">${user.points} pts</span>
       </li>
-    `
-    )
-    .join("");
+    `).join("");
 }
-
-// Call this on page load
-renderLeaderboard();
-
-document.getElementById("complete-task-btn").addEventListener("click", () => {
-  // Mock function - later replace with Firebase
-  mockAwardPoints(10); 
-});
 
 function mockAwardPoints(points) {
   const currentUser = mockUsers.find(u => u.id === "mock_user_1");
+  if (!currentUser) return;
+  
+  // Update points
   currentUser.points += points;
+  
+  // Check for badge unlock (example: award badge at 100 points)
+  if (currentUser.points >= 100 && !currentUser.badges.includes("centurion")) {
+    currentUser.badges.push("centurion");
+    showBadgeUnlock("centurion");
+  }
+  
+  // Update UI
   updateCurrentPointsDisplay();
   renderLeaderboard();
-  animatePointsPopup(points); // UI feedback
+  animatePointsPopup(points);
 }
 
-// UI feedback animation
+function updateCurrentPointsDisplay() {
+  const currentUser = mockUsers.find(u => u.id === "mock_user_1");
+  if (currentUser) {
+    document.getElementById("current-points").textContent = currentUser.points;
+  }
+}
+
 function animatePointsPopup(points) {
   const popup = document.createElement("div");
   popup.textContent = `+${points} points!`;
@@ -49,11 +64,15 @@ function animatePointsPopup(points) {
   setTimeout(() => popup.remove(), 2000);
 }
 
-// Update points display
-function updateCurrentPointsDisplay() {
-  const currentUser = mockUsers.find(u => u.id === "mock_user_1");
-  document.getElementById("current-points").textContent = currentUser.points;
+function showBadgeUnlock(badgeName) {
+  const badgePopup = document.createElement("div");
+  badgePopup.innerHTML = `
+    <div class="position-fixed top-50 start-50 translate-middle p-3 bg-warning text-dark rounded shadow-lg text-center">
+      <i class="fas fa-trophy fa-2x mb-2"></i>
+      <h5>New Badge Unlocked!</h5>
+      <p class="badge bg-white text-dark">${badgeName}</p>
+    </div>
+  `;
+  document.body.appendChild(badgePopup);
+  setTimeout(() => badgePopup.remove(), 3000);
 }
-
-// Initialize current points display
-updateCurrentPointsDisplay();

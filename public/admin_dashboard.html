@@ -4,8 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/sidebar.css" />
+    <style>
+      /* Animation for points pop-up */
+      @keyframes pop {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .animate-pop {
+        animation: pop 0.5s;
+      }
+    </style>
+    <script type="module">
+      import { initAuthGuard } from "./js/auth_guard.js";
+      import { monitorAuthState } from "./js/auth.js";
+
+      // Initialize auth guard
+      initAuthGuard();
+
+      // Set up logout functionality
+      document
+        .getElementById("logout-btn")
+        .addEventListener("click", async () => {
+          const { logoutUser } = await import("./js/auth.js");
+          await logoutUser();
+          window.location.href = "auth.html";
+        });
+
+      // Monitor auth state for UI updates
+      monitorAuthState((user) => {
+        if (user) {
+          document.getElementById("user-email").textContent = user.email;
+        }
+      });
+    </script>
   </head>
   <body>
     <div class="container mt-4">

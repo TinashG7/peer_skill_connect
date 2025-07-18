@@ -27,6 +27,53 @@
         animation: pop 0.5s;
       }
     </style>
+    <script type="module">
+      import { initAuthGuard } from "./js/auth_guard.js";
+      import { monitorAuthState } from "./js/auth.js";
+      import {
+        getDoc,
+        doc,
+      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+      import { db } from "./js/app.js";
+
+      // Initialize auth guard
+      initAuthGuard();
+
+      // Set up logout functionality
+      document
+        .getElementById("logout-btn")
+        .addEventListener("click", async () => {
+          const { logoutUser } = await import("./js/auth.js");
+          await logoutUser();
+          window.location.href = "auth.html";
+        });
+
+      // Monitor auth state for UI updates
+      monitorAuthState(async (user) => {
+        if (user) {
+          document.getElementById("user-email").textContent = user.email;
+        }
+        // Fetch user data from Firestore
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          // Update points display
+          document.getElementById("user-points-display").textContent =
+            userData.points || 0;
+
+          // Update active nav item based on role if needed
+          if (userData.role === "alumni") {
+            document
+              .querySelector('a[href="alumni_dashboard.html"]')
+              .classList.add("active");
+          } else {
+            document
+              .querySelector('a[href="student_dashboard.html"]')
+              .classList.add("active");
+          }
+        }
+      });
+    </script>
   </head>
   <body>
     <!--
@@ -150,7 +197,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="#" id="logout-btn">
                 <i class="fas fa-sign-out-alt"></i> Log Out
               </a>
             </li>

@@ -56,3 +56,33 @@ export async function logoutUser() {
 export function monitorAuthState(callback) {
   return onAuthStateChanged(auth, callback);
 }
+
+// Store additional/new user data in Firestore
+import {
+  doc,
+  setDoc,
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { db } from "./app.js";
+
+export async function registerUser(email, password, userData) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    // Store additional user data in Firestore
+    await setDoc(doc(db, "users", userCredential.user.uid), {
+      email: email,
+      role: userData.role, // 'student' or 'alumni'
+      points: 0,
+      badges: [],
+      ...userData,
+    });
+
+    return { success: true, user: userCredential.user };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}

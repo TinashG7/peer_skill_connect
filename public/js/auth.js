@@ -5,30 +5,45 @@ function mockLogin(role) {
   else window.location.href = "alumni_dashboard.html";
 }
 */
-
-import { auth } from "./js/app.js";
 import {
+  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import {
+  doc,
+  setDoc,
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { app, db } from "./app.js";
 
-// User registration function
-export async function registerUser(email, password) {
+const auth = getAuth(app);
+
+// User registration with additional data
+export async function registerUser(email, password, userData) {
   try {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
+
+    await setDoc(doc(db, "users", userCredential.user.uid), {
+      email: email,
+      role: userData.role || "student",
+      points: 0,
+      badges: [],
+      ...userData,
+    });
+
     return { success: true, user: userCredential.user };
   } catch (error) {
     return { success: false, error: error.message };
   }
 }
 
-// User login function
+// User login
 export async function loginUser(email, password) {
   try {
     const userCredential = await signInWithEmailAndPassword(
@@ -42,7 +57,7 @@ export async function loginUser(email, password) {
   }
 }
 
-// User logout function
+// User logout
 export async function logoutUser() {
   try {
     await signOut(auth);
@@ -57,32 +72,14 @@ export function monitorAuthState(callback) {
   return onAuthStateChanged(auth, callback);
 }
 
-// Store additional/new user data in Firestore
-import {
-  doc,
-  setDoc,
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { db } from "./app.js";
-
-export async function registerUser(email, password, userData) {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    // Store additional user data in Firestore
-    await setDoc(doc(db, "users", userCredential.user.uid), {
-      email: email,
-      role: userData.role, // 'student' or 'alumni'
-      points: 0,
-      badges: [],
-      ...userData,
-    });
-
-    return { success: true, user: userCredential.user };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
+// Error message helper
+export function getAuthErrorMessage(errorCode) {
+  const messages = {
+    "auth/invalid-email": "Invalid email format",
+    "auth/user-disabled": "Account disabled",
+    "auth/user-not-found": "Email not registered",
+    "auth/wrong-password": "Incorrect password",
+    "auth/too-many-requests": "Too many attempts. Try again later",
+  };
+  return messages[errorCode] || "Login failed. Please try again";
 }

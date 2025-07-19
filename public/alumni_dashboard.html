@@ -9,6 +9,7 @@
       rel="stylesheet"
     />
     <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/sidebar.css" />
     <script type="module">
       import { initAuthGuard } from "./js/auth_guard.js";
       import { monitorAuthState } from "./js/auth.js";
@@ -42,24 +43,19 @@
         <div class="sidebar-nav">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="student_dashboard.html">
+              <a
+                class="nav-link active"
+                href="alumni_dashboard.html"
+                id="alumni-dash-link"
+              >
                 <i class="fas fa-home"></i> Dashboard
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
-                <i class="fas fa-briefcase"></i> Find Jobs
+                <i class="fas fa-user-tie"></i> Find Mentee
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <i class="fas fa-user-tie"></i> Find Mentor
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <i class="fas fa-users"></i> Find Mentees
-              </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="leaderboard.html">
@@ -74,7 +70,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
-                <i class="fas fa-tasks"></i> Your Services
+                <i class="fas fa-tasks"></i> Your Sessions
               </a>
             </li>
           </ul>
@@ -88,7 +84,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" id="logout-btn">
+              <a class="nav-link" href="auth.html" id="logout-btn">
                 <i class="fas fa-sign-out-alt"></i> Log Out
               </a>
             </li>

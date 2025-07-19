@@ -29,7 +29,7 @@
     </style>
     <script type="module">
       import { initAuthGuard } from "./js/auth_guard.js";
-      import { monitorAuthState } from "./js/auth.js";
+      import { monitorAuthState, logoutUser } from "./js/auth.js";
       import {
         getDoc,
         doc,
@@ -52,6 +52,8 @@
       monitorAuthState(async (user) => {
         if (user) {
           document.getElementById("user-email").textContent = user.email;
+        } else {
+          window.location.href = "auth.html";
         }
         // Fetch user data from Firestore
         const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -151,7 +153,11 @@
         <div class="sidebar-nav">
           <ul class="nav flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="student_dashboard.html">
+              <a
+                class="nav-link active"
+                href="student_dashboard.html"
+                id="student-dash-link"
+              >
                 <i class="fas fa-home"></i> Dashboard
               </a>
             </li>
@@ -197,7 +203,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" id="logout-btn">
+              <a class="nav-link" href="auth.html" id="logout-btn">
                 <i class="fas fa-sign-out-alt"></i> Log Out
               </a>
             </li>
